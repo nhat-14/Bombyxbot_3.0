@@ -124,8 +124,8 @@ void Arx::SubscriberCallback(const gas_intake_msgs::Gas::ConstPtr& recieveMsg) {
                 echo_msg.data = "error!";
             }
 
-        PublisherObject1.publish(echo_msg);    
-        PublisherObject2.publish(hit_side); 
+        PublisherObj1.publish(echo_msg);    
+        PublisherObj2.publish(hit_side); 
     }
      
 }

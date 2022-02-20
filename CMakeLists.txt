@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -206,6 +207,12 @@ catkin_install_python(PROGRAMS
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
+add_executable(real_anemometer src/wind_visualize.cpp)
+target_link_libraries(real_anemometer ${catkin_LIBRARIES})
+
 add_executable(gas_read src/gas_read.cpp)
 target_link_libraries(gas_read ${catkin_LIBRARIES})
 add_dependencies(gas_read gas_intake_msgs_generate_messages_cpp)
+
+add_executable(tf_broadcaster src/tf_broadcaster.cpp)
+target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
