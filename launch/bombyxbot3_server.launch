@@ -1,4 +1,6 @@
 <launch>
-  <node pkg="bombyxbot3" name="main" type="main.py"/>
+  <!--node pkg="bombyxbot3" name="main" type="main.py"/-->
   <node pkg="bombyxbot3" name="gas_read" type="gas_read"/>
+  <node pkg="bombyxbot3" name="tf_broadcaster" type="tf_broadcaster"/>
+  <node pkg="bombyxbot3" name="real_anemometer" type="real_anemometer"/>
 </launch>

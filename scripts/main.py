@@ -3,9 +3,6 @@
 # @brief This code detects gas existance using ARX model. 
 #  *
 # @author Luong Duc Nhat
-# Contact: js@lsst.org
-#  *
-# @author Luong Duc Nhat
 # Contact: luong.d.aa@m.titech.ac.jp
 # 
 # @copyright Copyright 2021, The Chemical Plume Tracing (CPT) Robot Project"
@@ -20,7 +17,6 @@
 import rospy
 from collections import namedtuple
 from geometry_msgs.msg import Twist
-import numpy as np
 from nav_msgs.msg import Odometry
 from tf.transformations import euler_from_quaternion
 from std_msgs.msg import String

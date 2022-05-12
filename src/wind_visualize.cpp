@@ -12,7 +12,6 @@ class SubscribeAndPublish {
 		}
 
 		void windCallback(const olfaction_msgs::anemometer::ConstPtr& windMsg) {
-			
 			visualization_msgs::Marker wind_point_inv;
 			
 			std::string	input_sensor_frame = "anemometer_frame";
