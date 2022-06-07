@@ -43,32 +43,32 @@ class SubscribeAndPublish {
 
 				float downWind_direction_map = windMsg->wind_direction;
 				double wind_speed = windMsg->wind_speed;
-				double wind_direction;
+				// double wind_direction;
 				
 				// (IMPORTANT) Follow standards on wind measurement (real anemometers):
 				//return the upwind direction in the anemometer reference system
 				//range [-pi,pi]
 				//positive to the right, negative to the left (opposed to ROS poses :s)
 
-				float upWind_direction_map = angles::normalize_angle(downWind_direction_map + 3.14159);
+				// float upWind_direction_map = angles::normalize_angle(downWind_direction_map + 3.14159);
 
-				//Transform from map ref_system to the anemometer ref_system using TF
-				geometry_msgs::PoseStamped anemometer_upWind_pose, map_upWind_pose;
-				try {
-					map_upWind_pose.header.frame_id = input_fixed_frame.c_str();
-					map_upWind_pose.pose.position.x = 0.0;
-					map_upWind_pose.pose.position.y = 0.0;
-					map_upWind_pose.pose.position.z = 0.0;
-					map_upWind_pose.pose.orientation = tf::createQuaternionMsgFromYaw(upWind_direction_map);
+				// //Transform from map ref_system to the anemometer ref_system using TF
+				// geometry_msgs::PoseStamped anemometer_upWind_pose, map_upWind_pose;
+				// try {
+				// 	map_upWind_pose.header.frame_id = input_fixed_frame.c_str();
+				// 	map_upWind_pose.pose.position.x = 0.0;
+				// 	map_upWind_pose.pose.position.y = 0.0;
+				// 	map_upWind_pose.pose.position.z = 0.0;
+				// 	map_upWind_pose.pose.orientation = tf::createQuaternionMsgFromYaw(upWind_direction_map);
 
-					tf_.transformPose(input_sensor_frame.c_str(), map_upWind_pose, anemometer_upWind_pose);
-				}
-				catch(tf::TransformException &ex) {
-					ROS_ERROR("FakeAnemometer - %s - Error: %s", __FUNCTION__, ex.what());
-				}
+				// 	tf_.transformPose(input_sensor_frame.c_str(), map_upWind_pose, anemometer_upWind_pose);
+				// }
+				// catch(tf::TransformException &ex) {
+				// 	ROS_ERROR("FakeAnemometer - %s - Error: %s", __FUNCTION__, ex.what());
+				// }
 
-				double upwind_direction_anemo = tf::getYaw(anemometer_upWind_pose.pose.orientation);
-				wind_direction = upwind_direction_anemo;
+				// double upwind_direction_anemo = tf::getYaw(anemometer_upWind_pose.pose.orientation);
+				// wind_direction = upwind_direction_anemo;
 				
 				//Add inverted wind marker --> DownWind
 				wind_point_inv.header.stamp = ros::Time::now();
@@ -80,7 +80,7 @@ class SubscribeAndPublish {
 				wind_point_inv.pose.position.y = 0.0;
 				wind_point_inv.pose.position.z = 0.0;
 					
-				wind_point_inv.pose.orientation = tf::createQuaternionMsgFromYaw(wind_direction+3.1416);
+				// wind_point_inv.pose.orientation = tf::createQuaternionMsgFromYaw(wind_direction+3.1416);
 				wind_point_inv.pose.orientation = tf::createQuaternionMsgFromYaw(windMsg->wind_direction);
 				wind_point_inv.scale.x = wind_speed;	  //arrow lenght
 				wind_point_inv.scale.y = 0.1;	  //arrow width
