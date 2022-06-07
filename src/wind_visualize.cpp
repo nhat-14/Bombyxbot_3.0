@@ -7,9 +7,14 @@ class SubscribeAndPublish {
 	public:
 		SubscribeAndPublish() {
 			pub_ = n_.advertise<visualization_msgs::Marker>("WindSensor_display", 100);
+<<<<<<< HEAD
 			// sub_ = n_.subscribe("/chatter", 200, &SubscribeAndPublish::windCallback, this);
-			sub_ = n_.subscribe("/Anemometer/WindSensor_reading", 200, &SubscribeAndPublish::windCallback, this);
+			sub_ = n_.subscribe("/chatter", 200, &SubscribeAndPublish::windCallback, this);
 			
+=======
+			sub_ = n_.subscribe("/chatter", 200, &SubscribeAndPublish::windCallback, this);
+			// sub_ = n_.subscribe("/Anemometer/WindSensor_reading", 200, &SubscribeAndPublish::windCallback, this);
+>>>>>>> 7f7ce2810470a735e34ac753b835f92d14df3a44
 		}
 
 		void windCallback(const olfaction_msgs::anemometer::ConstPtr& windMsg) {
@@ -78,9 +83,15 @@ class SubscribeAndPublish {
 				wind_point_inv.points.clear();
 				wind_point_inv.id = 1;  //unique identifier for each arrow
 			
-				wind_point_inv.pose.position.x = 1.0;
-				wind_point_inv.pose.position.y = 1.0;
-				wind_point_inv.pose.position.z = 1.0;
+<<<<<<< HEAD
+				wind_point_inv.pose.position.x = 0.0;
+				wind_point_inv.pose.position.y = 0.0;
+				wind_point_inv.pose.position.z = 0.0;
+=======
+				wind_point_inv.pose.position.x = 0.0;
+				wind_point_inv.pose.position.y = 0.0;
+				wind_point_inv.pose.position.z = 0.0;
+>>>>>>> 7f7ce2810470a735e34ac753b835f92d14df3a44
 					
 				wind_point_inv.pose.orientation = tf::createQuaternionMsgFromYaw(wind_direction+3.1416);
 				wind_point_inv.pose.orientation = tf::createQuaternionMsgFromYaw(windMsg->wind_direction);

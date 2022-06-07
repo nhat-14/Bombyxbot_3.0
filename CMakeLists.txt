@@ -213,3 +213,6 @@ target_link_libraries(real_anemometer ${catkin_LIBRARIES})
 add_executable(gas_read src/gas_read.cpp)
 target_link_libraries(gas_read ${catkin_LIBRARIES})
 add_dependencies(gas_read gas_intake_msgs_generate_messages_cpp)
+
+add_executable(tf_broadcaster src/tf_broadcaster.cpp)
+target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
