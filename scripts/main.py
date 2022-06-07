@@ -3,9 +3,6 @@
 # @brief This code detects gas existance using ARX model. 
 #  *
 # @author Luong Duc Nhat
-# Contact: js@lsst.org
-#  *
-# @author Luong Duc Nhat
 # Contact: luong.d.aa@m.titech.ac.jp
 # 
 # @copyright Copyright 2021, The Chemical Plume Tracing (CPT) Robot Project"
@@ -20,10 +17,10 @@
 import rospy
 from collections import namedtuple
 from geometry_msgs.msg import Twist
-import numpy as np
 from nav_msgs.msg import Odometry
 from tf.transformations import euler_from_quaternion
 from std_msgs.msg import String
+from olfaction_msgs.msg import anemometer
 
 #=============== Bio inspired constanst of moth behavior ======================
 Delay       = namedtuple('Delay', ['surge', 'turn1', 'turn2', 'turn3'])
@@ -86,12 +83,16 @@ class Bombyxbot():
 
 def gasCb(msg):
     linear_vel, angular_vel = (0,0)
-    wind_dir =  agent.get_wind_dir()
-    if wind_dir < 270 and wind_dir > 90 :
-        hit_side = msg.data
-    else:
-        hit_side = 'nothing'
-
+    # wind_dir =  agent.get_wind_dir()
+    wind_dir = agent.get_agent_dir()
+    print(wind_dir, "")
+    # if wind_dir > 1.57 or  wind_dir <  -1.57 :
+    hit_side = msg.data
+    # if wind_dir < 1.6  and  wind_dir > -1.6 :
+    #     hit_side = msg.data
+    # else:
+    #     hit_side = 'nothing'
+    # print(hit_side)
     state = agent.get_state(hit_side)
     last_hit = agent.get_last_hit()
 
@@ -123,7 +124,6 @@ def gasCb(msg):
         move_cmd = Twist()
         move_cmd.linear.x = linear_vel
         move_cmd.angular.z = angular_vel
-
         pub.publish(move_cmd)
         agent.tblank_update()
 
@@ -143,10 +143,9 @@ and 173 is wind direction in degree.
 
 """
 def windCb(msg):
-    wind_data = (msg.data).split(",")
-    wind_dir = float(wind_data[2])
+    wind_spd = msg.wind_speed
+    wind_dir = msg.wind_direction
     agent.set_wind_dir(wind_dir)
-    print(wind_dir)
 
 
 def plume_tracing():
@@ -155,7 +154,7 @@ def plume_tracing():
     start_time = rospy.get_rostime()
     rospy.Subscriber('arx', String, gasCb)
     rospy.Subscriber('odom',Odometry, odometryCb)
-    rospy.Subscriber('chatter',String, windCb)
+    rospy.Subscriber('chatter',anemometer, windCb)
     rospy.spin()
 
 pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)

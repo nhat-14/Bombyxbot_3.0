@@ -60,11 +60,11 @@ class SubscribeAndPublish {
 			// 	ROS_ERROR("[GMRF] exception when reading observation: %s",ex.what());
 			// 	ros::Duration(1.0).sleep();
 			// }
-			
+      
 
 			bool know_sensor_pose = true;  
 			
-			if (know_sensor_pose) {				
+			if (know_sensor_pose) {		
 			// 	//Current sensor pose
 			// 	float x_pos = transform.getOrigin().x();
 			// 	float y_pos = transform.getOrigin().y();
@@ -115,7 +115,7 @@ class SubscribeAndPublish {
 				wind_point_inv.pose.position.x = 0.0;
 				wind_point_inv.pose.position.y = 0.0;
 				wind_point_inv.pose.position.z = 0.0;
-					
+
 				wind_point_inv.pose.orientation = tf::createQuaternionMsgFromYaw(reading_direction+3.1416);
 				wind_point_inv.scale.x = reading_speed;	  //arrow lenght
 				wind_point_inv.scale.y = 0.1;	  //arrow width
