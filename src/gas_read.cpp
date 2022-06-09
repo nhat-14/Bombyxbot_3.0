@@ -121,7 +121,7 @@ void Arx::SubscriberCallback(const gas_intake_msgs::Gas::ConstPtr& recieveMsg) {
                 echo_msg.data = "both";
                 break;
             default:
-                echo_msg.data = "error!";
+                echo_msg.data = "nothing";
             }
 
         PublisherObj1.publish(echo_msg);    
