@@ -48,7 +48,7 @@ class Arx {
         const double b0 = 0.2833;
         const double b1 = -0.2706;
         
-        const double TIME_STEP = 0.1;   //second
+        const double TIME_STEP = 0.02;   //second
         const double THRESHOLD = 0.04;
         const double SP_THRESHOLD = 0;
 

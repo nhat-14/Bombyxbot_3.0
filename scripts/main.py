@@ -27,9 +27,11 @@ Delay       = namedtuple('Delay', ['surge', 'turn1', 'turn2', 'turn3'])
 LinearVel   = namedtuple('LinearVel', ['stop', 'surge', 'turn'])
 AngularVel  = namedtuple('AngularVel', ['stop', 'surge', 'turnccw', 'turncw'])
 
-delay = Delay(0.5, 1.2, 1.9, 2.5)
-lin_v = LinearVel(0.0, 0.30, 0.08)
-ang_v = AngularVel(0.0, 0.062, 1.0, -1.0)  #radians per second 
+# The delay time is set based on Fig.& of Shigaki
+# DOI: 10.1109/LRA.2017.2730361
+delay = Delay(0.5, 1.7, 3.6, 5.7)
+lin_v = LinearVel(0.0, 0.10, 0.06)
+ang_v = AngularVel(0.0, 0.087, 0.5, -0.5)  #radians per second 
 
 
 class Bombyxbot():    
@@ -77,22 +79,23 @@ class Bombyxbot():
                 self._state = 'turn3'
             if self._state == 'turn3' and self._tblank >= delay.turn3:
                 self._state = 'loop'
-  
         return self._state
 
 
 def gasCb(msg):
     linear_vel, angular_vel = (0,0)
-    # wind_dir =  agent.get_wind_dir()
-    wind_dir = agent.get_agent_dir()
-    print(wind_dir, "")
+    wind_dir = agent.get_wind_dir()
+    agent_angle = agent.get_agent_dir()
+    print(f"wind ang: {wind_dir}, agent heading: {agent_angle}")
+
+    
     # if wind_dir > 1.57 or  wind_dir <  -1.57 :
-    hit_side = msg.data
-    # if wind_dir < 1.6  and  wind_dir > -1.6 :
-    #     hit_side = msg.data
-    # else:
-    #     hit_side = 'nothing'
-    # print(hit_side)
+    # hit_side = msg.data
+    if wind_dir < 0.5  and  wind_dir > -0.5 :
+        hit_side = msg.data
+    else:
+        hit_side = 'nothing'
+    print(hit_side)
     state = agent.get_state(hit_side)
     last_hit = agent.get_last_hit()
 
@@ -154,7 +157,7 @@ def plume_tracing():
     start_time = rospy.get_rostime()
     rospy.Subscriber('arx', String, gasCb)
     rospy.Subscriber('odom',Odometry, odometryCb)
-    rospy.Subscriber('chatter',anemometer, windCb)
+    rospy.Subscriber('windTopic',anemometer, windCb)
     rospy.spin()
 
 pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)

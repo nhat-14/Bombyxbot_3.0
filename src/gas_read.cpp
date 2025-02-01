@@ -79,8 +79,8 @@ int Arx::getStimuli() {
         }
     }
 
-    // int hit_side = stumli[0]*100 + stumli[1]*10 + stumli[2];
-    int hit_side = stumli[0] * 100 + stumli[1] * 0 + stumli[2];
+    int hit_side = stumli[0]*100 + stumli[1]*10 + stumli[2];
+    // int hit_side = stumli[0] * 100 + stumli[1] * 0 + stumli[2];
     return hit_side;
 }
 
@@ -134,7 +134,7 @@ void Arx::SubscriberCallback(const gas_intake_msgs::Gas::ConstPtr& recieveMsg) {
 int main(int argc, char **argv) {
     ros::init(argc, argv, "gas_read");
     ros::NodeHandle nh;    
-    Arx arx("arx", "gas_detect_led", "gas_read", 50);
+    Arx arx("arx", "gas_detect_led", "gasTopic", 50);
     ros::spin();
     return 0;
 }

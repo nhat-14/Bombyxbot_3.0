@@ -13,7 +13,7 @@ class SubscribeAndPublish {
 	public:
 		SubscribeAndPublish() {
 			pub_ = n_.advertise<visualization_msgs::Marker>("WindSensor_display", 100);
-			sub_ = n_.subscribe("/chatter", 200, &SubscribeAndPublish::windCallback, this);
+			sub_ = n_.subscribe("/windTopic", 200, &SubscribeAndPublish::windCallback, this);
 			input_sensor_frame = "anemometer_frame";
 			input_fixed_frame = "map";
 
